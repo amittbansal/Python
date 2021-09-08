@@ -1,0 +1,7 @@
+a="/Users/amitbansal/Desktop/a"; 		// origin address
+b="/Users/amitbansal/Desktop/trump_september"; //destination address
+
+
+for filename in $a/*.txt; do file_name=$(basename $filename); dir_name=$(echo $file_name | cut -f 1 -d '.'); c=$b/$dir_name ; file_name1=$a/$dir_name-new.txt; d=$c/$dir_name-mallet.mallet ;e=$c/$dir_name-mallet-training.mallet ;f=$c/$dir_name-mallet-testing.mallet  ;g=$c ;tr -dc [:alnum:][\ ,.@//\'#:\"\\\&]\\n < $filename  > $file_name1 ;mkdir -p $c ; bin/mallet import-file --input $file_name1 --output $d --keep-sequence --remove-stopwords; bin/mallet split --input $d  --training-file $e --testing-file $f --training-portion .8 ;for ((i=50;i<=400;i+=50));do bin/mallet train-topics --config train-topics.config --input $e  --num-topics $i --num-iterations 200;bin/mallet evaluate-topics --evaluator evaluator.mallet --input $f  --output-prob $g/prob-$i.txt;done ;done
+
+

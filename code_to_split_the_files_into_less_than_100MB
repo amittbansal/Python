@@ -1,0 +1,9 @@
+// Location Path
+
+a="/Users/amitbansal/Desktop/a"
+
+
+for filename in $a/*.txt; do f_name=$(basename $filename); file_name=$(echo $f_name | cut -f 1 -d '.'); b=($(stat -f%z $filename)); c=($(wc -l $filename)); if [ "$b" -gt "100000000" ]; then split -l $(((c/2)+1)) $filename $file_name; rm $filename; fi; done
+
+
+// size in KB change 100000000 it it require more than that

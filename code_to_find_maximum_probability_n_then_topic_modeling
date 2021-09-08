@@ -1,0 +1,6 @@
+ // change the origin folder and it going to create new files in same folder furthur it will remove it
+
+a="/Users/amitbansal/Desktop/clinton_processed_modelling/May"   
+
+
+for file in $a/*; do f_name=$(basename $file); cat $file/*.txt > $file/merged.txt; cat -n $file/merged.txt > $file/merged1.txt; sort -k2n $file/merged1.txt > $file/merged2.txt;awk 'NR==8' $file/merged2.txt > $file/merged3.txt;b=$(awk -F " " '{print $1}' $file/merged3.txt); if [ $b -eq 8 ]; then  c =$(((($b*100))-(((((($b*2))-1))*50)))); else c=$(((($b*100))-(((($b-1))*50)))); fi; bin/mallet train-topics --input $file/$f_name-mallet.mallet --num-topics $c  --num-iterations 500 --output-topic-keys $file/$f_name-mallet-topics-$c.txt; rm $file/merged.txt $file/merged1.txt $file/merged2.txt $file/merged3.txt;done
